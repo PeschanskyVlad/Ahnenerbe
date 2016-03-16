@@ -17,6 +17,14 @@ public:
 
 private:
     Ui::Widget *ui;
+    bool carState;
+    bool electromagnetState;
+public slots:
+    void carStatus();
+public slots:
+    void electromagnetStatus();
+public slots:
+    void exit();
 };
 
 #endif // WIDGET_H
