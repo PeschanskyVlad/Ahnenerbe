@@ -23,7 +23,8 @@ private:
     Ui::Widget *ui;
     bool carState;
     bool electromagnetState;
-    int programCarSpeed;
+    int programCarSpeed_motor1;
+    int programCarSpeed_motor2;
 
 public slots:
     void carStatus();
@@ -36,7 +37,14 @@ public slots:
 public slots:
     void carBraking();
 public slots:
-    void cangeCarPrograSpeed();
+    void cangeCarProgramSpeed1();
+public slots:
+    void cangeCarProgramSpeed2();
+public slots:
+    void carTurnLeft();
+public slots:
+    void carTurnRight();
+
 };
 
 
