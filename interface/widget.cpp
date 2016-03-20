@@ -14,14 +14,16 @@ void Widget::keyPressEvent(QKeyEvent * event){
         carAcceleration();
         break;
     case Qt::Key_A:
-        ui->textEdit->setText("a");
+        //ui->textEdit->setText("a");
+        carTurnLeft();
         break;
     case Qt::Key_S:
-        ui->textEdit->setText("s");
+        //ui->textEdit->setText("s");
         carBraking();
         break;
     case Qt::Key_D:
-        ui->textEdit->setText("d");
+       // ui->textEdit->setText("d");
+        carTurnRight();
         break;
     }
 
@@ -34,7 +36,8 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget)
 {
     carState=false;
-    programCarSpeed=50;
+    programCarSpeed_motor1=50;
+    programCarSpeed_motor2=50;
     electromagnetState=false;
     ui->setupUi(this);
     QObject::connect(ui->pushButton_5,SIGNAL(clicked()),this,SLOT(carStatus()));
@@ -42,7 +45,10 @@ Widget::Widget(QWidget *parent) :
     QObject::connect(ui->pushButton_7, SIGNAL(clicked()), this, SLOT(exit()));
     QObject::connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(carAcceleration()));
     QObject::connect(ui->pushButton_2, SIGNAL(clicked()), this, SLOT(carBraking()));
-    QObject::connect(ui->verticalSlider, SIGNAL(valueChanged(int)), this, SLOT(cangeCarPrograSpeed()));
+    QObject::connect(ui->pushButton_3, SIGNAL(clicked()), this, SLOT(carTurnRight()));
+    QObject::connect(ui->pushButton_4, SIGNAL(clicked()), this, SLOT(carTurnLeft()));
+    QObject::connect(ui->verticalSlider, SIGNAL(valueChanged(int)), this, SLOT(cangeCarProgramSpeed1()));
+    QObject::connect(ui->verticalSlider_2, SIGNAL(valueChanged(int)), this, SLOT(cangeCarProgramSpeed2()));
 
     ui->pushButton->setStyleSheet("QPushButton{background-color: lightgrey; border-style: outset; border-width: 5px; border-color: gray; }"
 "QPushButton:hover{background-color: lightgrey; border-style: outset; border-width: 5px; border-color: red;}");
@@ -63,7 +69,10 @@ Widget::Widget(QWidget *parent) :
     ui->pushButton_7->setStyleSheet("QPushButton{background-color: lightgrey; border-style: outset; border-width: 5px; border-color: gray; }"
 "QPushButton:hover{background-color: lightgrey; border-style: outset; border-width: 5px; border-color: red;}");
 
-    ui->verticalSlider->setValue(programCarSpeed);
+    ui->verticalSlider->setValue(programCarSpeed_motor1);
+    ui->verticalSlider_2->setValue(programCarSpeed_motor2);
+    ui->verticalSlider->setRange(0,100);
+    ui->verticalSlider_2->setRange(0,100);
 
 
 }
@@ -77,14 +86,22 @@ void Widget::carStatus()
 {
     carState = !carState;
     if(carState){
-        programCarSpeed=50;
-        ui->verticalSlider->setValue(programCarSpeed);
+        programCarSpeed_motor1=50;
+        programCarSpeed_motor2=50;
+        ui->verticalSlider->setValue(programCarSpeed_motor1);
+         ui->verticalSlider_2->setValue(programCarSpeed_motor2);
+         ui->lcdNumber->display((programCarSpeed_motor1-50)*2);
+         ui->lcdNumber_2->display((programCarSpeed_motor2-50)*2);
      ui->textEdit->setText("Online");
 
     }
     else {
-        programCarSpeed=50;
-        ui->verticalSlider->setValue(programCarSpeed);
+        programCarSpeed_motor1=50;
+        programCarSpeed_motor2=50;
+        ui->verticalSlider->setValue(programCarSpeed_motor1);
+         ui->verticalSlider_2->setValue(programCarSpeed_motor2);
+         ui->lcdNumber->display((programCarSpeed_motor1-50)*2);
+         ui->lcdNumber_2->display((programCarSpeed_motor2-50)*2);
         ui->textEdit->setText("Offline");
 
     }
@@ -93,6 +110,7 @@ void Widget::carStatus()
 
 void Widget::electromagnetStatus()
 {
+    electromagnetState = !electromagnetState;
     if(electromagnetState){
      ui->textEdit_5->setText("On");
 
@@ -101,7 +119,7 @@ void Widget::electromagnetStatus()
         ui->textEdit_5->setText("Off");
 
     }
-    electromagnetState = !electromagnetState;
+
 }
 
 void Widget::exit()
@@ -112,24 +130,91 @@ void Widget::exit()
 
 void Widget::carAcceleration()
 {
-    if (programCarSpeed<100){
-        programCarSpeed=programCarSpeed+10;
-    }
-    ui->verticalSlider->setValue(programCarSpeed);
+
+        programCarSpeed_motor1+=5;
+        programCarSpeed_motor2+=5;
+
+        if(programCarSpeed_motor1>100){
+            programCarSpeed_motor1=100;
+        }
+        if(programCarSpeed_motor2>100){
+          programCarSpeed_motor2=100;
+       }
+
+        ui->verticalSlider->setValue(programCarSpeed_motor1);
+         ui->verticalSlider_2->setValue(programCarSpeed_motor2);
+    ui->lcdNumber->display((programCarSpeed_motor1-50)*2);
+    ui->lcdNumber_2->display((programCarSpeed_motor2-50)*2);
+
    // ui->label_10->setText(QString("%1").arg(programCarSpeed));
 }
 
 void Widget::carBraking()
 {
-    if (programCarSpeed>0){
-        programCarSpeed=programCarSpeed-10;
-    }
-    ui->verticalSlider->setValue(programCarSpeed);
+
+    programCarSpeed_motor1-=5;
+    programCarSpeed_motor2-=5;
+
+        if(programCarSpeed_motor1<0){
+            programCarSpeed_motor1=0;
+        }
+        if(programCarSpeed_motor2<0){
+            programCarSpeed_motor2=0;
+        }
+
+        ui->verticalSlider->setValue(programCarSpeed_motor1);
+         ui->verticalSlider_2->setValue(programCarSpeed_motor2);
+     ui->lcdNumber->display((programCarSpeed_motor1-50)*2);
+     ui->lcdNumber_2->display((programCarSpeed_motor2-50)*2);
+
 }
 
-void Widget::cangeCarPrograSpeed()
+void Widget::cangeCarProgramSpeed1()
 {
-    programCarSpeed = ui->verticalSlider->value();
+    programCarSpeed_motor1 = ui->verticalSlider->value();
+     ui->lcdNumber->display((programCarSpeed_motor1-50)*2);
+    // programCarSpeed_motor2 = ui->verticalSlider_2->value();
+}
+
+void Widget::carTurnLeft()
+{
+     programCarSpeed_motor2+=5;
+     programCarSpeed_motor1-=5;
+
+     if(programCarSpeed_motor2>100){
+     programCarSpeed_motor2=100;
+     }
+     if(programCarSpeed_motor1<0){
+     programCarSpeed_motor1=0;
+     }
+     ui->verticalSlider->setValue(programCarSpeed_motor1);
+      ui->verticalSlider_2->setValue(programCarSpeed_motor2);
+  ui->lcdNumber->display((programCarSpeed_motor1-50)*2);
+  ui->lcdNumber_2->display((programCarSpeed_motor2-50)*2);
+     }
+
+
+void Widget::carTurnRight()
+{
+    programCarSpeed_motor2-=5;
+    programCarSpeed_motor1+=5;
+
+    if(programCarSpeed_motor1>100){
+    programCarSpeed_motor1=100;
+    }
+    if(programCarSpeed_motor2<0){
+    programCarSpeed_motor2=0;
+    }
+    ui->verticalSlider->setValue(programCarSpeed_motor1);
+     ui->verticalSlider_2->setValue(programCarSpeed_motor2);
+ ui->lcdNumber->display((programCarSpeed_motor1-50)*2);
+ ui->lcdNumber_2->display((programCarSpeed_motor2-50)*2);
+}
+
+void Widget::cangeCarProgramSpeed2()
+{
+    programCarSpeed_motor2 = ui->verticalSlider_2->value();
+     ui->lcdNumber_2->display((programCarSpeed_motor2-50)*2);
 }
 
 
