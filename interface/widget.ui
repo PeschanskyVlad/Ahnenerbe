@@ -210,6 +210,9 @@ p, li { white-space: pre-wrap; }
      <height>221</height>
     </rect>
    </property>
+   <property name="cursor">
+    <cursorShape>SizeVerCursor</cursorShape>
+   </property>
    <property name="orientation">
     <enum>Qt::Vertical</enum>
    </property>
@@ -1582,6 +1585,9 @@ p, li { white-space: pre-wrap; }
      <height>17</height>
     </rect>
    </property>
+   <property name="cursor">
+    <cursorShape>PointingHandCursor</cursorShape>
+   </property>
    <property name="text">
     <string>Line drive mode(On/Off)</string>
    </property>
@@ -1594,6 +1600,9 @@ p, li { white-space: pre-wrap; }
      <width>20</width>
      <height>221</height>
     </rect>
+   </property>
+   <property name="cursor">
+    <cursorShape>SizeVerCursor</cursorShape>
    </property>
    <property name="orientation">
     <enum>Qt::Vertical</enum>
