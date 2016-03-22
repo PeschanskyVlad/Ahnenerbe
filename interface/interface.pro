@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       +=  core widgets serialport
 
 TARGET = interface
 TEMPLATE = app
@@ -16,3 +16,4 @@ SOURCES += main.cpp\
 HEADERS  += widget.h
 
 FORMS    += widget.ui
+
