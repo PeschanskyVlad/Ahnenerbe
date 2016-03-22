@@ -2,6 +2,9 @@
 #include "time.h"
 #include "ui_widget.h"
 #include <Windows.h>
+#include <iostream>
+
+#include <QtSerialPort/QSerialPortInfo>
 
 #include <Qt>
 
@@ -34,10 +37,24 @@ void Widget::keyPressEvent(QKeyEvent * event){
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget)
+  , carPort(QSerialPortInfo::availablePorts()[0])
 {
+    /*Serial port setup*/
+    carPort.setBaudRate(QSerialPort::Baud9600);
+    carPort.open(QIODevice::ReadWrite);
+
+    //char snd[2];
+    //snd[0] = 1;
+   // snd[1] = 89;
+    //carPort.write(snd,2);
+
+
+
     carState=false;
     programCarSpeed_motor1=50;
     programCarSpeed_motor2=50;
+    motor1_direction=1;
+    motor2_direction=1;
     electromagnetState=false;
     ui->setupUi(this);
     QObject::connect(ui->pushButton_5,SIGNAL(clicked()),this,SLOT(carStatus()));
@@ -92,7 +109,7 @@ void Widget::carStatus()
          ui->verticalSlider_2->setValue(programCarSpeed_motor2);
          ui->lcdNumber->display((programCarSpeed_motor1-50)*2);
          ui->lcdNumber_2->display((programCarSpeed_motor2-50)*2);
-     ui->textEdit->setText("Online");
+     ui->textEdit->setText("Reset");
 
     }
     else {
@@ -102,10 +119,10 @@ void Widget::carStatus()
          ui->verticalSlider_2->setValue(programCarSpeed_motor2);
          ui->lcdNumber->display((programCarSpeed_motor1-50)*2);
          ui->lcdNumber_2->display((programCarSpeed_motor2-50)*2);
-        ui->textEdit->setText("Offline");
+        ui->textEdit->setText("Reset");
 
     }
-
+ArduinoOut();
 }
 
 void Widget::electromagnetStatus()
@@ -146,6 +163,9 @@ void Widget::carAcceleration()
     ui->lcdNumber->display((programCarSpeed_motor1-50)*2);
     ui->lcdNumber_2->display((programCarSpeed_motor2-50)*2);
 
+
+    ArduinoOut();
+
    // ui->label_10->setText(QString("%1").arg(programCarSpeed));
 }
 
@@ -167,12 +187,15 @@ void Widget::carBraking()
      ui->lcdNumber->display((programCarSpeed_motor1-50)*2);
      ui->lcdNumber_2->display((programCarSpeed_motor2-50)*2);
 
+ArduinoOut();
+
 }
 
 void Widget::cangeCarProgramSpeed1()
 {
     programCarSpeed_motor1 = ui->verticalSlider->value();
      ui->lcdNumber->display((programCarSpeed_motor1-50)*2);
+     ArduinoOut();
     // programCarSpeed_motor2 = ui->verticalSlider_2->value();
 }
 
@@ -191,6 +214,7 @@ void Widget::carTurnLeft()
       ui->verticalSlider_2->setValue(programCarSpeed_motor2);
   ui->lcdNumber->display((programCarSpeed_motor1-50)*2);
   ui->lcdNumber_2->display((programCarSpeed_motor2-50)*2);
+  ArduinoOut();
      }
 
 
@@ -209,12 +233,40 @@ void Widget::carTurnRight()
      ui->verticalSlider_2->setValue(programCarSpeed_motor2);
  ui->lcdNumber->display((programCarSpeed_motor1-50)*2);
  ui->lcdNumber_2->display((programCarSpeed_motor2-50)*2);
+ ArduinoOut();
+}
+
+void Widget::ArduinoOut()
+{
+    if(programCarSpeed_motor1>=50){
+        motor1_direction=1;
+    }
+    else{
+        motor1_direction=0;
+    }
+
+    if(programCarSpeed_motor2>=50){
+        motor2_direction=1;
+    }
+    else{
+        motor2_direction=0;
+    }
+
+    TempSpeed=abs(programCarSpeed_motor1-50)*5;
+    OutMessage[0]=TempSpeed;
+    OutMessage[1]=motor1_direction;
+    TempSpeed=abs(programCarSpeed_motor2-50)*5;
+    OutMessage[2]=TempSpeed;
+    OutMessage[3]=motor2_direction;
+
+   carPort.write(OutMessage,4);
 }
 
 void Widget::cangeCarProgramSpeed2()
 {
     programCarSpeed_motor2 = ui->verticalSlider_2->value();
      ui->lcdNumber_2->display((programCarSpeed_motor2-50)*2);
+     ArduinoOut();
 }
 
 
