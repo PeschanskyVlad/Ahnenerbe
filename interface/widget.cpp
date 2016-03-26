@@ -28,6 +28,8 @@ void Widget::keyPressEvent(QKeyEvent * event){
        // ui->textEdit->setText("d");
         carTurnRight();
         break;
+    case Qt::Key_Escape:
+        carStatus();
     }
 
     //ui->textEdit->setText(event->text());
@@ -39,7 +41,8 @@ Widget::Widget(QWidget *parent) :
     ui(new Ui::Widget)
   , carPort(QSerialPortInfo::availablePorts()[0])
 {
-    /*Serial port setup*/
+
+    //Serial port setup
     carPort.setBaudRate(QSerialPort::Baud9600);
     carPort.open(QIODevice::ReadWrite);
 
@@ -237,7 +240,9 @@ void Widget::carTurnRight()
 }
 
 void Widget::ArduinoOut()
+
 {
+    /*
     if(programCarSpeed_motor1>=50){
         motor1_direction=1;
     }
@@ -260,6 +265,7 @@ void Widget::ArduinoOut()
     OutMessage[3]=motor2_direction;
 
    carPort.write(OutMessage,4);
+   */
 }
 
 void Widget::cangeCarProgramSpeed2()
