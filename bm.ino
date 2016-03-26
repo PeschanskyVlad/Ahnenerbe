@@ -59,9 +59,7 @@ void setup(){
   setup_DC();
   R_DC_setSpeed(255);
   L_DC_setSpeed(255);
-  //  L_DC_rotateBackward();
-  //R_DC_rotateBackward();
-    L_DC_rotateForward();
+  L_DC_rotateForward();
   R_DC_rotateForward();
 }
 
