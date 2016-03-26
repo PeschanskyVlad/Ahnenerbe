@@ -84,12 +84,6 @@ void FB(){
 }
 
 void loop() {
-
-
-  /*
-// if(Serial.available()){
-//  int rec = Serial.read();
-//  if(rec == 1) L_DC_rotateForward();}
 if(Serial.available()==4){
   int speed_l, speed_r, dir_l, dir_r;
   speed_l = Serial.read();
@@ -102,6 +96,6 @@ if(Serial.available()==4){
   else if(dir_l == 0) L_DC_rotateBackward();
   if(dir_r == 1) R_DC_rotateForward();
   else if(dir_r == 0) R_DC_rotateBackward();
-}*/
+}
 }
 
