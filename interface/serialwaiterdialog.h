@@ -5,12 +5,15 @@
 #include <QBoxLayout>
 #include <QComboBox>
 #include <QPushButton>
+#include <QPicture>
 
 class SerialWaiterDialog : public QDialog
 {
     Q_OBJECT
     bool selected;
-    QBoxLayout* lo;
+    QBoxLayout* img_holder;
+    QPixmap logo;
+    QBoxLayout* buttonLayout;
     QComboBox* port_list;
     QPushButton* refresh_button;
     QPushButton* confirm_button;

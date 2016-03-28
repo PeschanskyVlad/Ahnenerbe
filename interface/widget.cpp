@@ -31,6 +31,10 @@ void Widget::keyPressEvent(QKeyEvent * event){
        // ui->textEdit->setText("d");
         carTurnRight();
         break;
+
+    case Qt::Key_Escape:
+    carStatus();
+    break;
     }
 
     //ui->textEdit->setText(event->text());
