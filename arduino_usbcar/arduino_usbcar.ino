@@ -1,6 +1,6 @@
 #define R_DC_PA 3
-#define R_DC_P1 5
-#define R_DC_P2 4
+#define R_DC_P1 4
+#define R_DC_P2 5
 
 #define L_DC_PA 9
 #define L_DC_P1 7
@@ -55,12 +55,9 @@ void setup_DC(){
 }
 
 void setup(){
-  Serial.begin(9600);
   setup_DC();
-  R_DC_setSpeed(255);
-  L_DC_setSpeed(255);
-  L_DC_rotateForward();
-  R_DC_rotateForward();
+  R_DC_setSpeed(180);
+  L_DC_setSpeed(180);
 }
 
 void LR(){
@@ -75,25 +72,14 @@ void LR(){
 void FB(){
   L_DC_rotateForward();
   R_DC_rotateForward();
-  delay(350);
+  delay(550);
   L_DC_rotateBackward();
   R_DC_rotateBackward();
-  delay(350);
+  delay(550);
 }
 
 void loop() {
-if(Serial.available()==4){
-  int speed_l, speed_r, dir_l, dir_r;
-  speed_l = Serial.read();
-  dir_l = Serial.read();
-  speed_r = Serial.read();
-  dir_r = Serial.read();
-  L_DC_setSpeed(speed_l);
-  R_DC_setSpeed(speed_r);
-  if(dir_l == 1) L_DC_rotateForward();
-  else if(dir_l == 0) L_DC_rotateBackward();
-  if(dir_r == 1) R_DC_rotateForward();
-  else if(dir_r == 0) R_DC_rotateBackward();
-}
+ //FB();  
+// LR();
 }
 
