@@ -11,9 +11,11 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        widget.cpp
+        widget.cpp \
+    serialwaiterdialog.cpp
 
-HEADERS  += widget.h
+HEADERS  += widget.h \
+    serialwaiterdialog.h
 
 FORMS    += widget.ui
 
