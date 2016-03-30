@@ -1,14 +1,17 @@
 #include "widget.h"
 #include "time.h"
 #include "ui_widget.h"
-#include <Windows.h>
+//include <Windows.h>
+#include <cstdlib>
 #include <iostream>
+#include "serialwaiterdialog.h"
 
 #include <QtSerialPort/QSerialPortInfo>
 
 #include <Qt>
 
 void Widget::keyPressEvent(QKeyEvent * event){
+
     switch(event->key()){
     case Qt::Key_W:
        // ui->pushButton->setStyleSheet("QPushButton{background-color: lightgrey; border-style: outset; border-width: 5px; border-color: red; }");
@@ -28,8 +31,10 @@ void Widget::keyPressEvent(QKeyEvent * event){
        // ui->textEdit->setText("d");
         carTurnRight();
         break;
+
     case Qt::Key_Escape:
-        carStatus();
+    carStatus();
+    break;
     }
 
     //ui->textEdit->setText(event->text());
@@ -39,10 +44,14 @@ void Widget::keyPressEvent(QKeyEvent * event){
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget)
-  , carPort(QSerialPortInfo::availablePorts()[0])
 {
+    /*Serial port setup*/
+    SerialWaiterDialog swd(this);
+    swd.exec();
+    QString port_name = swd.get_selection();
+    if(port_name.isNull()) std::exit(1);
 
-    //Serial port setup
+    carPort.setPortName(port_name);
     carPort.setBaudRate(QSerialPort::Baud9600);
     carPort.open(QIODevice::ReadWrite);
 
@@ -240,9 +249,7 @@ void Widget::carTurnRight()
 }
 
 void Widget::ArduinoOut()
-
 {
-    /*
     if(programCarSpeed_motor1>=50){
         motor1_direction=1;
     }
@@ -265,7 +272,6 @@ void Widget::ArduinoOut()
     OutMessage[3]=motor2_direction;
 
    carPort.write(OutMessage,4);
-   */
 }
 
 void Widget::cangeCarProgramSpeed2()
