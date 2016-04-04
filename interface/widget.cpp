@@ -1,14 +1,17 @@
 #include "widget.h"
 #include "time.h"
 #include "ui_widget.h"
-#include <Windows.h>
+//include <Windows.h>
+#include <cstdlib>
 #include <iostream>
+#include "serialwaiterdialog.h"
 
 #include <QtSerialPort/QSerialPortInfo>
 
 #include <Qt>
 
 void Widget::keyPressEvent(QKeyEvent * event){
+
     switch(event->key()){
     case Qt::Key_W:
        // ui->pushButton->setStyleSheet("QPushButton{background-color: lightgrey; border-style: outset; border-width: 5px; border-color: red; }");
@@ -28,28 +31,29 @@ void Widget::keyPressEvent(QKeyEvent * event){
        // ui->textEdit->setText("d");
         carTurnRight();
         break;
+
     case Qt::Key_Escape:
-        carStatus();
+    carStatus();
+    break;
     }
 
     //ui->textEdit->setText(event->text());
-
 }
+
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Widget)
-  , carPort(QSerialPortInfo::availablePorts()[0])
 {
+    /*Serial port setup*/
+    SerialWaiterDialog swd(this);
+    swd.exec();
+    QString port_name = swd.get_selection();
+    if(port_name.isNull()) std::exit(1);
 
-    //Serial port setup
+    carPort.setPortName(port_name);
     carPort.setBaudRate(QSerialPort::Baud9600);
     carPort.open(QIODevice::ReadWrite);
-
-    //char snd[2];
-    //snd[0] = 1;
-   // snd[1] = 89;
-    //carPort.write(snd,2);
 
 
 
@@ -61,7 +65,7 @@ Widget::Widget(QWidget *parent) :
     electromagnetState=false;
     ui->setupUi(this);
     QObject::connect(ui->pushButton_5,SIGNAL(clicked()),this,SLOT(carStatus()));
-    QObject::connect(ui->pushButton_6,SIGNAL(clicked()),this,SLOT(electromagnetStatus()));
+   // QObject::connect(ui->pushButton_6,SIGNAL(clicked()),this,SLOT(electromagnetStatus()));
     QObject::connect(ui->pushButton_7, SIGNAL(clicked()), this, SLOT(exit()));
     QObject::connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(carAcceleration()));
     QObject::connect(ui->pushButton_2, SIGNAL(clicked()), this, SLOT(carBraking()));
@@ -83,8 +87,6 @@ Widget::Widget(QWidget *parent) :
     ui->pushButton_5->setStyleSheet("QPushButton{background-color: lightgrey; border-style: outset; border-width: 5px; border-color: gray; }"
 "QPushButton:hover{background-color: lightgrey; border-style: outset; border-width: 5px; border-color: red;}");
 
-    ui->pushButton_6->setStyleSheet("QPushButton{background-color: lightgrey; border-style: outset; border-width: 5px; border-color: gray; }"
-"QPushButton:hover{background-color: lightgrey; border-style: outset; border-width: 5px; border-color: red;}");
 
     ui->pushButton_7->setStyleSheet("QPushButton{background-color: lightgrey; border-style: outset; border-width: 5px; border-color: gray; }"
 "QPushButton:hover{background-color: lightgrey; border-style: outset; border-width: 5px; border-color: red;}");
@@ -127,7 +129,7 @@ void Widget::carStatus()
     }
 ArduinoOut();
 }
-
+/*
 void Widget::electromagnetStatus()
 {
     electromagnetState = !electromagnetState;
@@ -141,7 +143,7 @@ void Widget::electromagnetStatus()
     }
 
 }
-
+*/
 void Widget::exit()
 {
     QApplication::exit();
@@ -240,9 +242,7 @@ void Widget::carTurnRight()
 }
 
 void Widget::ArduinoOut()
-
 {
-    /*
     if(programCarSpeed_motor1>=50){
         motor1_direction=1;
     }
@@ -263,9 +263,20 @@ void Widget::ArduinoOut()
     TempSpeed=abs(programCarSpeed_motor2-50)*5;
     OutMessage[2]=TempSpeed;
     OutMessage[3]=motor2_direction;
+    //OutMessage[4]=;
 
-   carPort.write(OutMessage,4);
-   */
+    carPort.write(OutMessage,4);
+}
+
+void Widget::ArduinoMusic()
+{
+    int Melody1[500];
+
+
+
+
+
+
 }
 
 void Widget::cangeCarProgramSpeed2()

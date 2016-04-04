@@ -55,6 +55,8 @@ public slots:
     void carTurnRight();
 public slots:
     void ArduinoOut();
+public slots:
+    void ArduinoMusic();
 
 };
 
