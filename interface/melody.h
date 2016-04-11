@@ -8,11 +8,11 @@ class Melody
     unsigned char * melodyArr;
     Melody();
 public:
-    Melody(unsigned char melodySize);
+    Melody(const char * melodyFileName);
     ~Melody();
 
-    void setNote(unsigned char index, unsigned char frequency, unsigned char duration);
-    void Melody::setMelodyFromFile(const char * melodyFileName);
+  //  void setNote(unsigned char index, unsigned char frequency, unsigned char duration);
+  //  void Melody::setMelodyFromFile(const char * melodyFileName);
 };
 
 #endif // MELODY_H
