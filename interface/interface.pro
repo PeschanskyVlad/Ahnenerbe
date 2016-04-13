@@ -12,16 +12,13 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         widget.cpp \
-    serialwaiterdialog.cpp \
-    melody.cpp
+    serialwaiterdialog.cpp
 
 HEADERS  += widget.h \
-    serialwaiterdialog.h \
-    melody.h
+    serialwaiterdialog.h
 
 FORMS    += widget.ui \
     serialreaderdialog.ui
 
 RESOURCES += \
-    resources.qrc
-
+    resources.qrc \

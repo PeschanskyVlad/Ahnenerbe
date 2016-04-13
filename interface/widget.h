@@ -33,6 +33,7 @@ private:
     //fstream F;
     bool carState;
     bool electromagnetState;
+    bool lightState;
     int programCarSpeed_motor1;
     int motor1_direction;
 
@@ -70,6 +71,8 @@ public slots:
     void SelectMusic();
 public slots:
     void PlayMusic();
+    void lightOnOff();
+    void electromagnetOnOff();
 
 };
 

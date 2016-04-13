@@ -5,7 +5,6 @@
 #include <cstdlib>
 #include <iostream>
 #include "serialwaiterdialog.h"
-
 #include<windows.h>
 
 #include <QtSerialPort/QSerialPortInfo>
@@ -58,6 +57,7 @@ Widget::Widget(QWidget *parent) :
 
 
     carState=false;
+    lightState=false;
     programCarSpeed_motor1=50;
     programCarSpeed_motor2=50;
     motor1_direction=1;
@@ -77,6 +77,8 @@ Widget::Widget(QWidget *parent) :
     QObject::connect(ui->refresh_button, SIGNAL(clicked()), this, SLOT(fillMusicList()));
     QObject::connect(ui->melody_list,SIGNAL(activated(QString)),this,SLOT(SelectMusic()));
     QObject::connect(ui->play_button,SIGNAL(clicked()),this,SLOT(PlayMusic()));
+    QObject::connect(ui->checkBox,SIGNAL(stateChanged(int)),this,SLOT(lightOnOff()));
+    QObject::connect(ui->checkBox_2,SIGNAL(stateChanged(int)),this,SLOT(electromagnetOnOff()));
 
     ui->pushButton->setStyleSheet("QPushButton{background-color: lightgrey; border-style: outset; border-width: 5px; border-color: gray; }"
 "QPushButton:hover{background-color: lightgrey; border-style: outset; border-width: 5px; border-color: red;}");
@@ -324,25 +326,61 @@ void Widget::PlayMusic()
         ;
     QTextStream in(&F);
     OutMessage[0]=1;//LOAD_MUSIC
-    int i=2;
-    //ui->label_13->setText(user_music);
+    int i=1;
+
         while (!in.atEnd())
         {
-            //ui->label_13->setText("Kek");
+
             ui->label_13->setText(QString::number(i));
-            //qDebug()<<i;
+
             OutMessage[i]=in.readLine().toInt();
-            // qDebug()<<OutMessage[i];
+
             ++i;
         }
-     OutMessage[1] = (i-2)/2;
+
      OutMessage[i] = 2; //PLAY_MUSIC
      F.close();
 
-     carPort.write(OutMessage,i);
+     carPort.write(OutMessage,i+1);
 
 
 
+
+}
+
+void Widget::lightOnOff()
+{
+    if(lightState){
+        OutMessage[0]=2;
+        OutMessage[1]=0;
+        lightState=false;
+        carPort.write(OutMessage,2);
+
+    }else{
+        lightState=true;
+        OutMessage[0]=2;
+        OutMessage[1]=1;
+        carPort.write(OutMessage,2);
+
+    }
+
+}
+
+void Widget::electromagnetOnOff()
+{
+    if(electromagnetState){
+        OutMessage[0]=3;
+        OutMessage[1]=0;
+        electromagnetState=false;
+        carPort.write(OutMessage,2);
+
+    }else{
+        electromagnetState=true;
+        OutMessage[0]=3;
+        OutMessage[1]=1;
+        carPort.write(OutMessage,2);
+
+    }
 
 }
 

@@ -68,9 +68,6 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="cursor">
-         <cursorShape>PointingHandCursor</cursorShape>
-        </property>
         <property name="text">
          <string>Refresh port list</string>
         </property>
@@ -83,9 +80,6 @@
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
-        </property>
-        <property name="cursor">
-         <cursorShape>PointingHandCursor</cursorShape>
         </property>
         <property name="text">
          <string>Confirm</string>
