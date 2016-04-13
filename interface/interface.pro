@@ -17,5 +17,8 @@ SOURCES += main.cpp\
 HEADERS  += widget.h \
     serialwaiterdialog.h
 
-FORMS    += widget.ui
+FORMS    += widget.ui \
+    serialreaderdialog.ui
 
+RESOURCES += \
+    resources.qrc \
