@@ -5,6 +5,11 @@
 #include <QtGui>
 #include <string>
 #include <QtSerialPort>
+#include <stdlib.h>
+#include <stdio.h>
+#include <iostream>
+#include <fstream>
+#include <iomanip>
 
 namespace Ui {
     class Widget;
@@ -23,6 +28,9 @@ private:
     //virtual void sliderMoved();
     Ui::Widget *ui;
     QSerialPort carPort;
+    QString user_music;
+    QString tempStr;
+    //fstream F;
     bool carState;
     bool electromagnetState;
     int programCarSpeed_motor1;
@@ -32,13 +40,14 @@ private:
     int motor2_direction;
 
     int TempSpeed;
+    bool select;
 
-    char OutMessage[4];
+    char OutMessage[1024];
 
 public slots:
     void carStatus();
 public slots:
-    void electromagnetStatus();
+ //   void electromagnetStatus();
 public slots:
     void exit();
 public slots:
@@ -55,6 +64,12 @@ public slots:
     void carTurnRight();
 public slots:
     void ArduinoOut();
+public slots:
+    void fillMusicList();
+public slots:
+    void SelectMusic();
+public slots:
+    void PlayMusic();
 
 };
 
