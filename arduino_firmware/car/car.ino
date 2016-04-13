@@ -1,4 +1,4 @@
-#include "car_settings.h"
+#include "opcodes.h"
 
 #define SPEAKER_PIN 10
 #define MAX_MELODY_LENGTH 100
@@ -42,17 +42,17 @@ melody_playing = true;
 
 void loop() {
   if(Serial.available()){
-    
     switch(Serial.read()){
     case LOAD_MUSIC:
-    while(!Serial.available());
-      melody_size = Serial.read();
-      while(Serial.available() < melody_size * 2);
-      for(int i = 0; i < melody_size; i++){
+     while(!Serial.available());
+       melody_size = Serial.read();
+       while(Serial.available() < melody_size * 2);
+       for(int i = 0; i < melody_size; i++){
         notes[i] = Serial.read();
         note_length[i] = Serial.read();
-      }
-      melody_playing = true;
+       }
+       melody_playing = true;
+    break;
     }
 
   }
