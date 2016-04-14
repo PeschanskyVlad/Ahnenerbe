@@ -1,5 +1,6 @@
 #ifndef WIDGET_H
 #define WIDGET_H
+#include "ui_widget.h"
 
 #include <QWidget>
 #include <QtGui>

@@ -1,14 +1,8 @@
 #include "opcodes.h"
 
 #include "widget.h"
-#include "time.h"
-#include "ui_widget.h"
-#include <cstdlib>
-#include <iostream>
 #include "serialwaiterdialog.h"
-
 #include <QtSerialPort/QSerialPortInfo>
-
 #include <Qt>
 
 void Widget::keyPressEvent(QKeyEvent * event){
@@ -68,12 +62,12 @@ void Widget::setupSerial(){
 
 void Widget::setupElectromagnet(){
     electromagnet_enabled=false;
-    connect(ui->electromagnet_chbox, QCheckBox::stateChanged, this, &Widget::electromagnetOnOff);
+    connect(ui->electromagnet_chbox, &QCheckBox::stateChanged, this, &Widget::electromagnetOnOff);
 }
 
 void Widget::setupLight(){
     light_enabled=false;
-    connect(ui->headlight_chbox, QCheckBox::stateChanged, this, &Widget::lightOnOff);
+    connect(ui->headlight_chbox, &QCheckBox::stateChanged, this, &Widget::lightOnOff);
 }
 
 void Widget::setupMusic(){
@@ -263,7 +257,6 @@ void Widget::fillMusicList()
         QString curr_file = files.at(i);
         QString tempStr = curr_file.left(curr_file.indexOf('.'));
         ui->melody_list->addItem(tempStr,curr_file);
-
     }
     music_selected=false;
     ui->play_button->setEnabled(false);
@@ -291,10 +284,9 @@ void Widget::PlayMusic()
             OutMessage[i]=in.readLine().toInt();
             ++i;
         }
-     OutMessage[i] = OP_PLAY_MUSIC;
      F.close();
 
-     carPort.write(OutMessage,i+1);
+     carPort.write(OutMessage,i);
 }
 
 void Widget::lightOnOff()
