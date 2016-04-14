@@ -321,7 +321,7 @@ void Widget::PlayMusic()
 
     QFile F(QDir::currentPath()+"/Melodies/"+user_music);
     if(!F.open(QIODevice::ReadOnly)){
-        ui->label_13->setText(QDir::currentPath()+"/Melodies/"+user_music);
+
     }
         ;
     QTextStream in(&F);
@@ -331,7 +331,7 @@ void Widget::PlayMusic()
         while (!in.atEnd())
         {
 
-            ui->label_13->setText(QString::number(i));
+
 
             OutMessage[i]=in.readLine().toInt();
 
