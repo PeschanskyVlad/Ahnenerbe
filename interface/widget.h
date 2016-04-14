@@ -50,15 +50,18 @@ private slots:
     void resetMotors();
     void exit();
     void carAcceleration();
-    void carBraking();
+    void carBreaking();
     void change_left_motor_speed(int val);
     void change_right_motor_speed(int val);
     void carTurnLeft();
     void carTurnRight();
     void ArduinoOut();
+
     void fillMusicList();
-    void SelectMusic(int selection_index);
-    void PlayMusic();
+    void selectMusic(int selection_index);
+    void uploadMusic();
+    void musicToggle();
+
     void lightToggle();
     void electromagnetToggle();
 };

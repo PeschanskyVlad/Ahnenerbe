@@ -19,7 +19,7 @@ void Widget::keyPressEvent(QKeyEvent * event){
         carTurnLeft();
         break;
     case Qt::Key_S:
-        carBraking();
+        carBreaking();
         break;
     case Qt::Key_D:
         carTurnRight();
@@ -58,7 +58,7 @@ void Widget::setupEngines(){
     updateSpeedDisplays();
 
     connect(ui->acceleration_btn,&QPushButton::clicked, this, &Widget::carAcceleration);
-    connect(ui->breaking_btn, &QPushButton::clicked, this, &Widget::carBraking);
+    connect(ui->breaking_btn, &QPushButton::clicked, this, &Widget::carBreaking);
     connect(ui->turn_left_btn,&QPushButton::clicked, this, &Widget::carTurnLeft);
     connect(ui->turn_right_btn, &QPushButton::clicked, this, &Widget::carTurnRight);
 
@@ -90,9 +90,10 @@ void Widget::setupLight(){
 }
 
 void Widget::setupMusic(){
-    connect(ui->melody_list,SIGNAL(activated(int)),this,SLOT(SelectMusic(int)));
+    connect(ui->melody_list,SIGNAL(currentIndexChanged(int)),this,SLOT(selectMusic(int)));
     connect(ui->refresh_button, &QPushButton::clicked,this, &Widget::fillMusicList);
-    connect(ui->play_button, &QPushButton::clicked,this,&Widget::PlayMusic);
+    connect(ui->upload_button, &QPushButton::clicked,this,&Widget::uploadMusic);
+    music_playing = false;
     fillMusicList();
 }
 
@@ -107,7 +108,6 @@ Widget::Widget(QWidget *parent) :
     setupElectromagnet();
     setupMusic();
 
-    //TODO: move to setup..() methods
     connect(ui->reset_btn,&QPushButton::clicked,this,&Widget::resetMotors);
     QObject::connect(ui->exit_button, SIGNAL(clicked()), this, SLOT(exit()));
 }
@@ -141,7 +141,7 @@ void Widget::carAcceleration()
     ArduinoOut();
 }
 
-void Widget::carBraking()
+void Widget::carBreaking()
 {
     left_motor_speed = max(0,left_motor_speed-5);
     right_motor_speed = max(0,right_motor_speed-5);
@@ -202,18 +202,23 @@ void Widget::fillMusicList()
         ui->melody_list->addItem(tempStr,curr_file);
     }
     music_selected=false;
-    ui->play_button->setEnabled(false);
+    ui->upload_button->setEnabled(false);
+
+    if(files.size()==1)
+        selectMusic(0);
+
+    ui->melody_list->setCurrentIndex(0);
 }
 
-void Widget::SelectMusic(int selection)
+void Widget::selectMusic(int selection)
 {
     this->user_music = ui->melody_list->currentData().toString();
     music_selected = true;
-    ui->play_button->setEnabled(true);
+    ui->upload_button->setEnabled(true);
 }
 
 
-void Widget::PlayMusic()
+void Widget::uploadMusic()
 {
     QFile F(QDir::currentPath()+"/Melodies/"+user_music);
     if(!F.open(QIODevice::ReadOnly)){
@@ -232,37 +237,24 @@ void Widget::PlayMusic()
     carPort.write(OutMessage,i);
 }
 
+void Widget::musicToggle(){
+    OutMessage[0] = music_playing ? OP_STOP_MUSIC : OP_PLAY_MUSIC;
+    carPort.write(OutMessage, 1);
+    music_playing = !music_playing;
+}
+
 void Widget::lightToggle()
 {
-    if(light_enabled){
-        OutMessage[0]=OP_LED_OFF;
-        OutMessage[1]=0;//TODO: not need
-        light_enabled=false;
-        carPort.write(OutMessage,2);
-
-    }else{
-        light_enabled=true;
-        OutMessage[0]=OP_LED_ON;
-        OutMessage[1]=1;//TODO: not need
-        carPort.write(OutMessage,2);
-    }
+    OutMessage[0] = light_enabled ? OP_LED_OFF : OP_LED_ON;
+    carPort.write(OutMessage, 1);
+    light_enabled = !light_enabled;
 }
 
 void Widget::electromagnetToggle()
 {
-    if(electromagnet_enabled){
-        OutMessage[0]=OP_CARGO_ON;
-        OutMessage[1]=0;//TODO: this not need
-        electromagnet_enabled=false;
-        carPort.write(OutMessage,2);
-
-    }else{
-        electromagnet_enabled=true;
-        OutMessage[0]=OP_CARGO_OFF;
-        OutMessage[1]=1;//TODO: Don't need to send status
-        carPort.write(OutMessage,2);
-    }
-
+    OutMessage[0] = electromagnet_enabled ? OP_CARGO_OFF : OP_CARGO_ON;
+    carPort.write(OutMessage, 1);
+    electromagnet_enabled = !electromagnet_enabled;
 }
 
 void Widget::change_left_motor_speed(int val)
