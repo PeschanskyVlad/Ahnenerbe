@@ -93,6 +93,8 @@ void Widget::setupMusic(){
     connect(ui->melody_list,SIGNAL(currentIndexChanged(int)),this,SLOT(selectMusic(int)));
     connect(ui->refresh_button, &QPushButton::clicked,this, &Widget::fillMusicList);
     connect(ui->upload_button, &QPushButton::clicked,this,&Widget::uploadMusic);
+    connect(ui->pause_button, &QPushButton::clicked, this, &Widget::musicToggle);
+
     music_playing = false;
     fillMusicList();
 }

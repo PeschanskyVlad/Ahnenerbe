@@ -2113,7 +2113,7 @@
     <string>Line drive mode(On/Off)</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pauseButton">
+  <widget class="QPushButton" name="pause_button">
    <property name="geometry">
     <rect>
      <x>710</x>
