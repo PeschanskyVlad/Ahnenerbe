@@ -124,7 +124,7 @@ void Widget::resetMotors()
     left_motor_speed=50;
     right_motor_speed=50;
     updateSpeedDisplays();
-    ArduinoOut();
+    writeMovementParams();
 }
 
 void Widget::exit()
@@ -140,7 +140,7 @@ void Widget::carAcceleration()
 
     updateSpeedDisplays();
 
-    ArduinoOut();
+    writeMovementParams();
 }
 
 void Widget::carBreaking()
@@ -150,7 +150,7 @@ void Widget::carBreaking()
 
     updateSpeedDisplays();
 
-    ArduinoOut();
+    writeMovementParams();
 
 }
 
@@ -161,7 +161,7 @@ void Widget::carTurnLeft()
 
     updateSpeedDisplays();
 
-    ArduinoOut();
+    writeMovementParams();
 }
 
 void Widget::carTurnRight()
@@ -171,11 +171,11 @@ void Widget::carTurnRight()
 
     updateSpeedDisplays();
 
-    ArduinoOut();
+    writeMovementParams();
 }
 
 //TODO: Rename, refactor
-void Widget::ArduinoOut()
+void Widget::writeMovementParams()
 {
     left_motor_forward = left_motor_speed>=50;
     right_motor_forward = right_motor_speed>=50;
@@ -263,12 +263,12 @@ void Widget::change_left_motor_speed(int val)
 {
     left_motor_speed = val;
     updateSpeedLCDs();
-    ArduinoOut();
+    writeMovementParams();
 }
 
 void Widget::change_right_motor_speed(int val)
 {
     right_motor_speed = val;
     updateSpeedLCDs();
-    ArduinoOut();
+    writeMovementParams();
 }

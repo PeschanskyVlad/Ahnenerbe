@@ -55,7 +55,7 @@ private slots:
     void change_right_motor_speed(int val);
     void carTurnLeft();
     void carTurnRight();
-    void ArduinoOut();
+    void writeMovementParams();
 
     void fillMusicList();
     void selectMusic(int selection_index);
