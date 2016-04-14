@@ -25,11 +25,14 @@ private:
     void setupElectromagnet();
     void setupMusic();
 
+    void updateSpeedSliders();
+    void updateSpeedLCDs();
+    void updateSpeedDisplays();
+
     virtual void keyPressEvent(QKeyEvent * event);
     Ui::Widget *ui;
     QSerialPort carPort;
     QString user_music;
-    //bool carState; //TODO:WTF: что делает эта переменная?
     bool electromagnet_enabled;
     bool light_enabled;
 
@@ -39,24 +42,25 @@ private:
     int right_motor_forward;
 
     bool music_selected;
+    bool music_playing;
 
     char OutMessage[1024];
 
-public slots:
-    void carStatus();
+private slots:
+    void resetMotors();
     void exit();
     void carAcceleration();
     void carBraking();
-    void change_left_motor_speed();
-    void change_right_motor_speed();
+    void change_left_motor_speed(int val);
+    void change_right_motor_speed(int val);
     void carTurnLeft();
     void carTurnRight();
     void ArduinoOut();
     void fillMusicList();
     void SelectMusic(int selection_index);
     void PlayMusic();
-    void lightOnOff();
-    void electromagnetOnOff();
+    void lightToggle();
+    void electromagnetToggle();
 };
 
 
