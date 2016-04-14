@@ -24,13 +24,18 @@ public:
     ~Widget();
 
 private:
+    void setupSerial();
+    void setupEngines();
+    void setupLight();
+    void setupElectromagnet();
+    void setupStyles();
+    void setupMusic();
+
     virtual void keyPressEvent(QKeyEvent * event);
-    //virtual void sliderMoved();
     Ui::Widget *ui;
     QSerialPort carPort;
     QString user_music;
     QString tempStr;
-    //fstream F;
     bool carState;
     bool electromagnetState;
     bool lightState;
@@ -47,33 +52,19 @@ private:
 
 public slots:
     void carStatus();
-public slots:
- //   void electromagnetStatus();
-public slots:
     void exit();
-public slots:
     void carAcceleration();
-public slots:
     void carBraking();
-public slots:
     void cangeCarProgramSpeed1();
-public slots:
     void cangeCarProgramSpeed2();
-public slots:
     void carTurnLeft();
-public slots:
     void carTurnRight();
-public slots:
     void ArduinoOut();
-public slots:
     void fillMusicList();
-public slots:
     void SelectMusic();
-public slots:
     void PlayMusic();
     void lightOnOff();
     void electromagnetOnOff();
-
 };
 
 
