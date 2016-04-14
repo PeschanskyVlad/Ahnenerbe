@@ -1587,23 +1587,23 @@
     <string>Refresh music list</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="play_button">
+  <widget class="QPushButton" name="upload_button">
    <property name="enabled">
     <bool>false</bool>
    </property>
    <property name="geometry">
     <rect>
      <x>710</x>
-     <y>200</y>
+     <y>190</y>
      <width>191</width>
-     <height>101</height>
+     <height>41</height>
     </rect>
    </property>
    <property name="cursor">
     <cursorShape>PointingHandCursor</cursorShape>
    </property>
    <property name="text">
-    <string>Play</string>
+    <string>Upload</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_5">
@@ -2111,6 +2111,19 @@
    </property>
    <property name="text">
     <string>Line drive mode(On/Off)</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pause_button">
+   <property name="geometry">
+    <rect>
+     <x>710</x>
+     <y>250</y>
+     <width>191</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Play/Pause</string>
    </property>
   </widget>
  </widget>
