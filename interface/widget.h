@@ -3,13 +3,7 @@
 
 #include <QWidget>
 #include <QtGui>
-#include <string>
 #include <QtSerialPort>
-#include <stdlib.h>
-#include <stdio.h>
-#include <iostream>
-#include <fstream>
-#include <iomanip>
 
 namespace Ui {
     class Widget;
@@ -28,25 +22,22 @@ private:
     void setupEngines();
     void setupLight();
     void setupElectromagnet();
-    void setupStyles();
     void setupMusic();
 
     virtual void keyPressEvent(QKeyEvent * event);
     Ui::Widget *ui;
     QSerialPort carPort;
     QString user_music;
-    QString tempStr;
-    bool carState;
-    bool electromagnetState;
-    bool lightState;
-    int programCarSpeed_motor1;
-    int motor1_direction;
+    //bool carState; //TODO:WTF: что делает эта переменная?
+    bool electromagnet_enabled;
+    bool light_enabled;
 
-    int programCarSpeed_motor2;
-    int motor2_direction;
+    int left_motor_speed;
+    int left_motor_forward;
+    int right_motor_speed;
+    int right_motor_forward;
 
-    int TempSpeed;
-    bool select;
+    bool music_selected;
 
     char OutMessage[1024];
 
@@ -61,7 +52,7 @@ public slots:
     void carTurnRight();
     void ArduinoOut();
     void fillMusicList();
-    void SelectMusic();
+    void SelectMusic(int selection_index);
     void PlayMusic();
     void lightOnOff();
     void electromagnetOnOff();
