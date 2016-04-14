@@ -228,12 +228,13 @@ void Widget::uploadMusic()
     }
     QTextStream in(&F);
     OutMessage[0]=OP_LOAD_MUSIC;
-    int i=1;
+    int i=2;
     while (!in.atEnd())
     {
         OutMessage[i]=in.readLine().toInt();
         ++i;
     }
+    OutMessage[1] = (i-2)/2;
     F.close();
 
     carPort.write(OutMessage,i);
