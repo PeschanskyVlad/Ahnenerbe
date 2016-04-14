@@ -15,7 +15,8 @@ SOURCES += main.cpp\
     serialwaiterdialog.cpp
 
 HEADERS  += widget.h \
-    serialwaiterdialog.h
+    serialwaiterdialog.h \
+    opcodes.h
 
 FORMS    += widget.ui \
     serialreaderdialog.ui

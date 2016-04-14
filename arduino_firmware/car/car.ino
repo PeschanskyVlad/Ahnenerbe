@@ -43,7 +43,7 @@ melody_playing = true;
 void loop() {
   if(Serial.available()){
     switch(Serial.read()){
-    case LOAD_MUSIC:
+    case OP_LOAD_MUSIC:
      while(!Serial.available());
        melody_size = Serial.read();
        while(Serial.available() < melody_size * 2);
@@ -51,10 +51,14 @@ void loop() {
         notes[i] = Serial.read();
         note_length[i] = Serial.read();
        }
-       melody_playing = true;
-    break;
+   break;
     }
-
+   case OP_PLAY_MUSIC:
+       melody_playing = true;
+   break;
+   case OP_STOP_MUSIC:
+       melody_playing = false;
+   break;
   }
   if(melody_playing)
     play_note();

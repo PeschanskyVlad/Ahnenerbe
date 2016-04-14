@@ -3,13 +3,7 @@
 
 #include <QWidget>
 #include <QtGui>
-#include <string>
 #include <QtSerialPort>
-#include <stdlib.h>
-#include <stdio.h>
-#include <iostream>
-#include <fstream>
-#include <iomanip>
 
 namespace Ui {
     class Widget;
@@ -24,56 +18,44 @@ public:
     ~Widget();
 
 private:
+    void setupSerial();
+    void setupEngines();
+    void setupLight();
+    void setupElectromagnet();
+    void setupMusic();
+
     virtual void keyPressEvent(QKeyEvent * event);
-    //virtual void sliderMoved();
     Ui::Widget *ui;
     QSerialPort carPort;
     QString user_music;
-    QString tempStr;
-    //fstream F;
-    bool carState;
-    bool electromagnetState;
-    bool lightState;
-    int programCarSpeed_motor1;
-    int motor1_direction;
+    //bool carState; //TODO:WTF: что делает эта переменная?
+    bool electromagnet_enabled;
+    bool light_enabled;
 
-    int programCarSpeed_motor2;
-    int motor2_direction;
+    int left_motor_speed;
+    int left_motor_forward;
+    int right_motor_speed;
+    int right_motor_forward;
 
-    int TempSpeed;
-    bool select;
+    bool music_selected;
 
     char OutMessage[1024];
 
 public slots:
     void carStatus();
-public slots:
- //   void electromagnetStatus();
-public slots:
     void exit();
-public slots:
     void carAcceleration();
-public slots:
     void carBraking();
-public slots:
-    void cangeCarProgramSpeed1();
-public slots:
-    void cangeCarProgramSpeed2();
-public slots:
+    void change_left_motor_speed();
+    void change_right_motor_speed();
     void carTurnLeft();
-public slots:
     void carTurnRight();
-public slots:
     void ArduinoOut();
-public slots:
     void fillMusicList();
-public slots:
-    void SelectMusic();
-public slots:
+    void SelectMusic(int selection_index);
     void PlayMusic();
     void lightOnOff();
     void electromagnetOnOff();
-
 };
 
 

@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>CarInterface</string>
   </property>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="acceleration_btn">
    <property name="geometry">
     <rect>
      <x>390</x>
@@ -42,7 +42,7 @@
     <string>First motor speed:</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="breaking_btn">
    <property name="geometry">
     <rect>
      <x>390</x>
@@ -58,7 +58,7 @@
     <string>Braking</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_3">
+  <widget class="QPushButton" name="turn_right_btn">
    <property name="geometry">
     <rect>
      <x>470</x>
@@ -74,7 +74,7 @@
     <string>Turn right</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_4">
+  <widget class="QPushButton" name="turn_left_btn">
    <property name="geometry">
     <rect>
      <x>310</x>
@@ -90,40 +90,7 @@
     <string>Turn left</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_2">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>50</y>
-     <width>71</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Car status:</string>
-   </property>
-  </widget>
-  <widget class="QTextEdit" name="textEdit">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
-   <property name="geometry">
-    <rect>
-     <x>80</x>
-     <y>50</y>
-     <width>171</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="html">
-    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Reset&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushButton_5">
+  <widget class="QPushButton" name="reset_btn">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -152,7 +119,7 @@ p, li { white-space: pre-wrap; }
     <string>Second motor speed:</string>
    </property>
   </widget>
-  <widget class="QSlider" name="verticalSlider">
+  <widget class="QSlider" name="left_speed_slider">
    <property name="geometry">
     <rect>
      <x>570</x>
@@ -163,6 +130,12 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="cursor">
     <cursorShape>SizeVerCursor</cursorShape>
+   </property>
+   <property name="toolTip">
+    <string/>
+   </property>
+   <property name="whatsThis">
+    <string>klj</string>
    </property>
    <property name="orientation">
     <enum>Qt::Vertical</enum>
@@ -207,7 +180,7 @@ p, li { white-space: pre-wrap; }
     <string>100</string>
    </property>
   </widget>
-  <widget class="QLCDNumber" name="lcdNumber">
+  <widget class="QLCDNumber" name="left_speed_lcd">
    <property name="geometry">
     <rect>
      <x>130</x>
@@ -216,8 +189,11 @@ p, li { white-space: pre-wrap; }
      <height>23</height>
     </rect>
    </property>
+   <property name="segmentStyle">
+    <enum>QLCDNumber::Flat</enum>
+   </property>
   </widget>
-  <widget class="QLCDNumber" name="lcdNumber_2">
+  <widget class="QLCDNumber" name="right_speed_lcd">
    <property name="geometry">
     <rect>
      <x>130</x>
@@ -225,6 +201,9 @@ p, li { white-space: pre-wrap; }
      <width>111</width>
      <height>23</height>
     </rect>
+   </property>
+   <property name="segmentStyle">
+    <enum>QLCDNumber::Flat</enum>
    </property>
   </widget>
   <widget class="Line" name="line">
@@ -1083,7 +1062,7 @@ p, li { white-space: pre-wrap; }
     <enum>Qt::Vertical</enum>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_7">
+  <widget class="QPushButton" name="exit_button">
    <property name="geometry">
     <rect>
      <x>950</x>
@@ -1527,7 +1506,7 @@ p, li { white-space: pre-wrap; }
     <string/>
    </property>
   </widget>
-  <widget class="QSlider" name="verticalSlider_2">
+  <widget class="QSlider" name="right_speed_slider">
    <property name="geometry">
     <rect>
      <x>640</x>
@@ -1543,30 +1522,30 @@ p, li { white-space: pre-wrap; }
     <enum>Qt::Vertical</enum>
    </property>
   </widget>
-  <widget class="QLabel" name="label_4">
+  <widget class="QLabel" name="left_motor_name">
    <property name="geometry">
     <rect>
-     <x>560</x>
+     <x>550</x>
      <y>20</y>
-     <width>46</width>
-     <height>13</height>
+     <width>51</width>
+     <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string>Motor1</string>
+    <string>Left motor</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_9">
+  <widget class="QLabel" name="right_motor_name">
    <property name="geometry">
     <rect>
-     <x>630</x>
+     <x>620</x>
      <y>20</y>
-     <width>46</width>
-     <height>13</height>
+     <width>61</width>
+     <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string>Motor2</string>
+    <string>Right motor</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_12">
@@ -2095,7 +2074,7 @@ p, li { white-space: pre-wrap; }
     <string>audio player</string>
    </property>
   </widget>
-  <widget class="QCheckBox" name="checkBox">
+  <widget class="QCheckBox" name="headlight_chbox">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -2108,7 +2087,7 @@ p, li { white-space: pre-wrap; }
     <string>Headlight (On/Off)</string>
    </property>
   </widget>
-  <widget class="QCheckBox" name="checkBox_2">
+  <widget class="QCheckBox" name="electromagnet_chbox">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -2121,7 +2100,7 @@ p, li { white-space: pre-wrap; }
     <string>Electromagnet (On/Off)</string>
    </property>
   </widget>
-  <widget class="QCheckBox" name="checkBox_3">
+  <widget class="QCheckBox" name="line_drive_chbox">
    <property name="geometry">
     <rect>
      <x>20</x>
