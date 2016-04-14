@@ -1,6 +1,8 @@
 #ifndef _OPCODES_H_
 #define _OPCODES_H_
 
+#define OPCODES_VERSION 15_04_2016_00_26
+
 enum OPCode {
   OP_STOP_ALL = -1,
   OP_MOVE = 0,
