@@ -32,7 +32,7 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>30</x>
+     <x>20</x>
      <y>130</y>
      <width>91</width>
      <height>16</height>
@@ -1527,22 +1527,6 @@ p, li { white-space: pre-wrap; }
     <string/>
    </property>
   </widget>
-  <widget class="QRadioButton" name="radioButton">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>90</y>
-     <width>221</width>
-     <height>17</height>
-    </rect>
-   </property>
-   <property name="cursor">
-    <cursorShape>PointingHandCursor</cursorShape>
-   </property>
-   <property name="text">
-    <string>Line drive mode(On/Off)</string>
-   </property>
-  </widget>
   <widget class="QSlider" name="verticalSlider_2">
    <property name="geometry">
     <rect>
@@ -1596,32 +1580,6 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="text">
     <string/>
-   </property>
-  </widget>
-  <widget class="QRadioButton" name="radioButton_2">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>240</y>
-     <width>141</width>
-     <height>17</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Electromagnet (On/Off)</string>
-   </property>
-  </widget>
-  <widget class="QRadioButton" name="radioButton_3">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>270</y>
-     <width>121</width>
-     <height>17</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Headlight (On/Off)</string>
    </property>
   </widget>
   <widget class="QComboBox" name="melody_list">
@@ -2137,17 +2095,43 @@ p, li { white-space: pre-wrap; }
     <string>audio player</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_13">
+  <widget class="QCheckBox" name="checkBox">
    <property name="geometry">
     <rect>
-     <x>710</x>
-     <y>60</y>
-     <width>101</width>
-     <height>16</height>
+     <x>20</x>
+     <y>270</y>
+     <width>131</width>
+     <height>17</height>
     </rect>
    </property>
    <property name="text">
-    <string>xxx</string>
+    <string>Headlight (On/Off)</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBox_2">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>250</y>
+     <width>141</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Electromagnet (On/Off)</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBox_3">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>100</y>
+     <width>141</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Line drive mode(On/Off)</string>
    </property>
   </widget>
  </widget>
