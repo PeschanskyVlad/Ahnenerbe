@@ -46,8 +46,8 @@ public slots:
     void exit();
     void carAcceleration();
     void carBraking();
-    void cangeCarProgramSpeed1();
-    void cangeCarProgramSpeed2();
+    void change_left_motor_speed();
+    void change_right_motor_speed();
     void carTurnLeft();
     void carTurnRight();
     void ArduinoOut();

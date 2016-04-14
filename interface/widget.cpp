@@ -49,8 +49,8 @@ void Widget::setupEngines(){
     connect(ui->turn_left_btn,&QPushButton::clicked, this, &Widget::carTurnLeft);
     connect(ui->turn_right_btn, &QPushButton::clicked, this, &Widget::carTurnRight);
 
-    connect(ui->left_speed_slider, &QSlider::valueChanged, this, &Widget::cangeCarProgramSpeed1);
-    connect(ui->right_speed_slider, &QSlider::valueChanged, this, &Widget::cangeCarProgramSpeed2);
+    connect(ui->left_speed_slider, &QSlider::valueChanged, this, &Widget::change_left_motor_speed);
+    connect(ui->right_speed_slider, &QSlider::valueChanged, this, &Widget::change_right_motor_speed);
 }
 
 void Widget::setupSerial(){
@@ -91,13 +91,11 @@ Widget::Widget(QWidget *parent) :
     setupSerial();
     ui->setupUi(this);
     setupLight();
-    //TODO: rename carState, lightState to carEnabled, lightEnabled
     setupEngines();
     setupElectromagnet();
 
     //TODO: move to setup..() methods
     connect(ui->reset_btn,&QPushButton::clicked,this,&Widget::carStatus);
-    QObject::connect(ui->reset_btn,SIGNAL(clicked()),this,SLOT(carStatus()));
     QObject::connect(ui->exit_button, SIGNAL(clicked()), this, SLOT(exit()));
 }
 
@@ -181,12 +179,11 @@ ArduinoOut();
 
 }
 
-void Widget::cangeCarProgramSpeed1()
+void Widget::change_left_motor_speed()
 {
     left_motor_speed = ui->left_speed_slider->value();
      ui->left_speed_lcd->display((left_motor_speed-50)*2);
      ArduinoOut();
-    // programCarSpeed_motor2 = ui->right_speed_slider->value();
 }
 
 //TODO:Refactor
@@ -284,7 +281,7 @@ void Widget::PlayMusic()
 {
     QFile F(QDir::currentPath()+"/Melodies/"+user_music);
     if(!F.open(QIODevice::ReadOnly)){
-      //TODO:WTF
+      //TODO:WTF add some error handling
     }
     QTextStream in(&F);
     OutMessage[0]=OP_LOAD_MUSIC;
@@ -333,7 +330,7 @@ void Widget::electromagnetOnOff()
 
 }
 
-void Widget::cangeCarProgramSpeed2()
+void Widget::change_right_motor_speed()
 {
      right_motor_speed = ui->right_speed_slider->value();
      ui->right_speed_lcd->display((right_motor_speed-50)*2);
