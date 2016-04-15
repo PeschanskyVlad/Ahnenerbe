@@ -1,15 +1,15 @@
 #include "opcodes.h"
 
 /*----+----+----+----PINS---+---+----+*/
-#define SPEAKER_PIN 10
+#define SPEAKER_PIN 6
 
 #define R_DC_PA 3
-#define R_DC_P1 5
-#define R_DC_P2 4
+#define R_DC_P1 4
+#define R_DC_P2 5
 
 #define L_DC_PA 9
-#define L_DC_P1 7
-#define L_DC_P2 8
+#define L_DC_P1 8
+#define L_DC_P2 7
 /*-----------------PINS END----------*/
 
 #define MAX_MELODY_LENGTH 100
@@ -115,9 +115,33 @@ void loadMelody(){
   note_change_time = millis();
 }
 
+void loadMovementParams() {
+  int speed_l, speed_r, dir_l, dir_r;
+  
+  while(Serial.available() < 4);
+  
+  speed_l = Serial.read();
+  dir_l = Serial.read();
+  speed_r = Serial.read();
+  dir_r = Serial.read();
+  
+  L_DC_setSpeed(speed_l);
+  R_DC_setSpeed(speed_r);
+
+  if(dir_l == 0) L_DC_rotateForward();
+  else L_DC_rotateBackward();
+  if(dir_r == 0) R_DC_rotateForward();
+  else R_DC_rotateBackward();
+/*
+  dir_l == 0 ? L_DC_rotateForward() : L_DC_rotateBackward();
+  dir_r == 0 ? R_DC_rotateForward() : R_DC_rotateBackward();
+  */
+}
+
 void loop() {
   if(Serial.available()){
     switch(Serial.read()){
+     case OP_MOVE: loadMovementParams(); break;
      case OP_LOAD_MUSIC: loadMelody(); break;
      case OP_PLAY_MUSIC: melody_playing = true; noTone(SPEAKER_PIN); break;
      case OP_STOP_MUSIC: melody_playing = false; noTone(SPEAKER_PIN); break;
