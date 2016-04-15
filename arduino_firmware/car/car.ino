@@ -1,9 +1,9 @@
 #include "opcodes.h"
 
 /*----+----+----+----PINS---+---+----+*/
-#define SPEAKER_PIN 6
+#define SPEAKER_PIN 3
 
-#define R_DC_PA 3
+#define R_DC_PA 6
 #define R_DC_P1 4
 #define R_DC_P2 5
 
@@ -74,6 +74,7 @@ void setup_DC(){
 }
 /******DC CONTROL END*****/
 
+//TODO: use bw^(note/12)
 int note_to_freq(char note){
   return 50+note * 78;
 }
@@ -128,14 +129,8 @@ void loadMovementParams() {
   L_DC_setSpeed(speed_l);
   R_DC_setSpeed(speed_r);
 
-  if(dir_l == 0) L_DC_rotateForward();
-  else L_DC_rotateBackward();
-  if(dir_r == 0) R_DC_rotateForward();
-  else R_DC_rotateBackward();
-/*
   dir_l == 0 ? L_DC_rotateForward() : L_DC_rotateBackward();
   dir_r == 0 ? R_DC_rotateForward() : R_DC_rotateBackward();
-  */
 }
 
 void loop() {
@@ -143,7 +138,7 @@ void loop() {
     switch(Serial.read()){
      case OP_MOVE: loadMovementParams(); break;
      case OP_LOAD_MUSIC: loadMelody(); break;
-     case OP_PLAY_MUSIC: melody_playing = true; noTone(SPEAKER_PIN); break;
+     case OP_PLAY_MUSIC: melody_playing = true;  noTone(SPEAKER_PIN); break;
      case OP_STOP_MUSIC: melody_playing = false; noTone(SPEAKER_PIN); break;
     }
   }
