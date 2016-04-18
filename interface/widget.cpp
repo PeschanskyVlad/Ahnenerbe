@@ -174,17 +174,16 @@ void Widget::carTurnRight()
     writeMovementParams();
 }
 
-//TODO: Rename, refactor
 void Widget::writeMovementParams()
 {
     left_motor_forward = left_motor_speed>=50;
     right_motor_forward = right_motor_speed>=50;
 
-    int TempSpeed=abs(left_motor_speed-50)*5;
+    int TempSpeed=abs(left_motor_speed-50)*5;//TODO: Don't need abs
     OutMessage[0]=OP_MOVE;
     OutMessage[1]=TempSpeed;
     OutMessage[2]=left_motor_forward;
-    TempSpeed=abs(right_motor_speed-50)*5;
+    TempSpeed=abs(right_motor_speed-50)*5;//TODO: Don't need abs
     OutMessage[3]=TempSpeed;
     OutMessage[4]=right_motor_forward;
 
@@ -228,12 +227,13 @@ void Widget::uploadMusic()
     }
     QTextStream in(&F);
     OutMessage[0]=OP_LOAD_MUSIC;
-    int i=1;
+    int i=2;
     while (!in.atEnd())
     {
         OutMessage[i]=in.readLine().toInt();
         ++i;
     }
+    OutMessage[1] = (i-2)/2;
     F.close();
 
     carPort.write(OutMessage,i);
